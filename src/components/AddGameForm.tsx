@@ -14,7 +14,6 @@ export default function AddGameForm() {
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
-        console.log(name, genre, price, discount, releaseDate, rating, imageURL);
         fetch("/api/games", {
             method: "POST",
             headers: {

@@ -22,13 +22,34 @@ export default function GameGrid(props: { games: Game[], adminMode?: boolean }) 
         Swal.fire({
             title: 'Edit Game',
             html: `
+            <div class="flex flex-col">
+            <label for="swal-input1">Name</label>
             <input id="swal-input1" class="swal2-input" placeholder="Game Name" value="${existingGames.find((game: Game) => game.id === id)?.name}">
+            </div>
+            <div class="flex flex-col">
+            <label for="swal-input2">Genre</label>
             <input id="swal-input2" class="swal2-input" placeholder="Game Genre" value="${existingGames.find((game: Game) => game.id === id)?.genre}">
+            </div>
+            <div class="flex flex-col">
+            <label for="swal-input3">Rating</label>
             <input id="swal-input3" class="swal2-input" placeholder="Game Rating" value="${existingGames.find((game: Game) => game.id === id)?.rating}">
+            </div>
+            <div class="flex flex-col">
+            <label for="swal-input4">Price</label>
             <input id="swal-input4" class="swal2-input" placeholder="Game Price" value="${existingGames.find((game: Game) => game.id === id)?.price}">
+            </div>
+            <div class="flex flex-col">
+            <label for="swal-input5">Discount</label>
             <input id="swal-input5" class="swal2-input" placeholder="Game Discount" value="${existingGames.find((game: Game) => game.id === id)?.discount}">
+            </div>
+            <div class="flex flex-col">
+            <label for="swal-input6">Release Date</label>
             <input id="swal-input6" class="swal2-input" placeholder="Game Release Date" value="${existingGames.find((game: Game) => game.id === id)?.releaseDate}">
+            </div>
+            <div class="flex flex-col">
+            <label for="swal-input7">Image URL</label>
             <input id="swal-input7" class="swal2-input" placeholder="Game Image URL" value="${existingGames.find((game: Game) => game.id === id)?.image_url}">
+            </div>
             `,
             focusConfirm: false,
             showCancelButton: true,
