@@ -2,6 +2,7 @@
 import type { Game } from '@prisma/client'
 import GameCard from './GameCard';
 import { useState } from 'react';
+import Swal from 'sweetalert2';
 export default function GameGrid(props: { games: Game[], adminMode?: boolean }) {
 
     const [existingGames, setExistingGames] = useState(props.games);
@@ -16,12 +17,68 @@ export default function GameGrid(props: { games: Game[], adminMode?: boolean }) 
             setExistingGames(props.games.filter((game: Game) => game.id !== id));
         });
     };
+    const handleEditGame = (id: number) => {
+
+        Swal.fire({
+            title: 'Edit Game',
+            html: `
+            <input id="swal-input1" class="swal2-input" placeholder="Game Name" value="${existingGames.find((game: Game) => game.id === id)?.name}">
+            <input id="swal-input2" class="swal2-input" placeholder="Game Genre" value="${existingGames.find((game: Game) => game.id === id)?.genre}">
+            <input id="swal-input3" class="swal2-input" placeholder="Game Rating" value="${existingGames.find((game: Game) => game.id === id)?.rating}">
+            <input id="swal-input4" class="swal2-input" placeholder="Game Price" value="${existingGames.find((game: Game) => game.id === id)?.price}">
+            <input id="swal-input5" class="swal2-input" placeholder="Game Discount" value="${existingGames.find((game: Game) => game.id === id)?.discount}">
+            <input id="swal-input6" class="swal2-input" placeholder="Game Release Date" value="${existingGames.find((game: Game) => game.id === id)?.releaseDate}">
+            <input id="swal-input7" class="swal2-input" placeholder="Game Image URL" value="${existingGames.find((game: Game) => game.id === id)?.image_url}">
+            `,
+            focusConfirm: false,
+            showCancelButton: true,
+            preConfirm: () => {
+                return [
+                    (document.getElementById('swal-input1') as HTMLInputElement).value,
+                    (document.getElementById('swal-input2') as HTMLInputElement).value,
+                    (document.getElementById('swal-input3') as HTMLInputElement).value,
+                    (document.getElementById('swal-input4') as HTMLInputElement).value,
+                    (document.getElementById('swal-input5') as HTMLInputElement).value,
+                    (document.getElementById('swal-input6') as HTMLInputElement).value,
+                    (document.getElementById('swal-input7') as HTMLInputElement).value,
+                ]
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const [name, genre, rating, price, discount, releaseDate, image_url] = result.value;
+                fetch(`/api/games/${id}`, {
+                    method: "PATCH",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name,
+                        genre,
+                        rating: parseInt(rating),
+                        price: parseInt(price),
+                        discount: parseInt(discount),
+                        releaseDate: new Date(releaseDate).toISOString(),
+                        image_url
+                    })
+                }).then((res) => res.json()).then((data) => {
+                    //Update the record in the existing games array
+                    setExistingGames(existingGames.map((game: Game) => {
+                        if (game.id === id) {
+                            return data;
+                        } else {
+                            return game;
+                        }
+                    }
+                    ));
+                });
+            }
+        });
+    };
 
     const handleGenreChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setGenreFilter(event.target.value);
         setPageNumber(1); // reset page number when genre is changed
     }
-
     const handleNextButtonClick = () => {
         setPageNumber(pageNumber + 1);
     }
@@ -64,6 +121,7 @@ export default function GameGrid(props: { games: Game[], adminMode?: boolean }) 
                         {...game}
                         adminMode={props.adminMode}
                         handleDeleteGame={handleDeleteGame}
+                        handleEditGame={handleEditGame}
                     />
                 ))}
             </div>

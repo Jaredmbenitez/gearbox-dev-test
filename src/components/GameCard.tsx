@@ -42,7 +42,7 @@ export default function GameCard(props) {
             </div>
             {props.adminMode && (
                 <div className="px-6 py-4">
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-2" >
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-2" onClick={() => props.handleEditGame(props.id)}>
                         Edit
                     </button>
                     <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mx-2" onClick={() => props.handleDeleteGame(props.id)} >
