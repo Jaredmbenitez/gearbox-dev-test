@@ -1,8 +1,9 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import GameTable from "../components/GameTable";
-const Home: NextPage = () => {
+import GameGrid from "../components/GameGrid";
+import type { Game } from "@prisma/client";
 
+const Home: NextPage = ({ games }) => {
     return (
         <>
             <Head>
@@ -12,10 +13,20 @@ const Home: NextPage = () => {
             </Head>
             <main className="flex min-h-screen flex-col items-center justify-center">
                 <h1 className="text-4xl font-bold text-white">Welcome to the gearbox dev test</h1>
-                <GameTable adminMode={false} />
+                <GameGrid games={games} />
             </main>
         </>
     );
 };
 
 export default Home;
+// Fetch games on Server before page load.
+export async function getServerSideProps() {
+    const res = await fetch("http://localhost:3000/api/games");
+    const games = await res.json();
+    return {
+        props: {
+            games,
+        },
+    };
+}
