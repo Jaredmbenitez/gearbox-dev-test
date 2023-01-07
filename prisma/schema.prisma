@@ -6,16 +6,17 @@ generator client {
 }
 
 datasource db {
-    provider = "sqlite"
-    url      = env("DB_URL")
+    provider = "mysql"
+    url      = "mysql://root:@localhost:3306/gearbox"
 }
 
 model Game {
     id        Int      @id @default(autoincrement())
     name      String
-    category  String
     genre    String
     price    Float
+    discount   Int
     releaseDate DateTime
     rating    Int
+    image_url String
 }

@@ -1,11 +1,12 @@
-
+// Admins should have the option to add, edit and delete from the list of games.
 import { type NextPage } from "next";
+import GameTable from "../../components/GameTable";
 
 const Admin: NextPage = () => {
     return (
         <>
-            <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
-                <p> This is the admin page content </p>
+            <main className="flex min-h-screen flex-col items-center justify-center ">
+                <GameTable adminMode={true} />
             </main>
         </>
     );
