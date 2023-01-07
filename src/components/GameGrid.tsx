@@ -10,7 +10,6 @@ export default function GameGrid(props: { games: Game[], adminMode?: boolean }) 
     const [gamesPerPage, setGamesPerPage] = useState(10);
 
     const handleDeleteGame = (id: number) => {
-        console.log(id);
         fetch(`/api/games/${id}`, {
             method: "DELETE",
         }).then((res) => res.json()).then((data) => {
@@ -57,7 +56,7 @@ export default function GameGrid(props: { games: Game[], adminMode?: boolean }) 
                     <option value="Adventure">Adventure</option>
                 </select>
             </div>
-            <hr className="h-10" />
+            <div className="h-10 bg-gray-100 my-2"></div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                 {currentPageGames.map((game: Game) => (
                     <GameCard

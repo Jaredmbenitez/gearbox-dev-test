@@ -10,19 +10,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             where: { id: Number(id) },
         });
         res.json(game);
-    } else if (req.method === 'POST') {
-        const { name, genre, price, discount, releaseDate, rating } = req.body;
-        const game: Game = await prisma.game.create({
-            data: {
-                name,
-                genre,
-                price,
-                discount,
-                releaseDate,
-                rating
-            }
-        });
-        res.json(game);
     }
     else if (req.method === 'DELETE') {
         const { id } = req.query;
