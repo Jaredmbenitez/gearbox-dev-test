@@ -16,7 +16,7 @@ export default function AddGameForm() {
         console.log(name, genre, price, discount, releaseDate, rating);
     }
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="mx-4 my-4 p-4 border border-gray-300 rounded">
             <h3 className="text-2xl font-bold text-center">Add a new game</h3>
             <div className="grid grid-cols-1">
                 <div>
@@ -43,6 +43,10 @@ export default function AddGameForm() {
                 <div>
                     <label className="block text-gray-700 text-sm font-bold mb-2">Rating</label>
                     <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="number" placeholder="Rating" value={rating} onChange={(e) => setRating(parseInt(e.target.value))} />
+                </div>
+                <div>
+                    <label className="block text-gray-700 text-sm font-bold mb-2">Image URL</label>
+                    <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Image" />
                 </div>
                 <div className="flex items-center justify-between my-4">
                     <button className="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
